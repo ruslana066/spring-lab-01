@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -22,6 +23,17 @@ public class HelloController {
         return new Info(owner,
                 System.getProperty("java.version"),
                 Runtime.getRuntime().availableProcessors());
+    }
+
+    @GetMapping("/reverse")
+    public Map<String, Object> reverse(@RequestParam String text) {
+        String reversed = new StringBuilder(text).reverse().toString();
+
+        return Map.of(
+                "original", text,
+                "reversed", reversed,
+                "length", text.length()
+        );
     }
 
     public record Greeting(String message, String owner, LocalDateTime timestamp) { }
