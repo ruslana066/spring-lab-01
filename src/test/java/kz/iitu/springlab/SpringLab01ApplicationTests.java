@@ -1,4 +1,4 @@
-package kz.iitu.spring_lab_01;
+package kz.iitu.spring.lab;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package kz.iitu.spring_lab_01;
+package kz.iitu.springlab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
