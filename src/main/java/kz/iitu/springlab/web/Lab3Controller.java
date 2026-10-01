@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -29,16 +30,20 @@ public class Lab3Controller {
 
     @GetMapping("/config")
     public Map<String, Object> config() {
-        return Map.of(
-                "owner", props.owner(),
-                "group", props.group(),
-                "mailFrom", props.mail().from(),
-                "mailRetryCount", props.mail().retryCount(),
-                "mailTimeout", props.mail().timeout().toString(),
-                "mailEnabled", props.mail().enabled(),
-                "serverPort", environment.getProperty("server.port"),
-                "activeProfiles", Arrays.asList(environment.getActiveProfiles()),
-                "banner", banner.describe()
-        );
+        Map<String, Object> config = new LinkedHashMap<>();
+
+        config.put("owner", props.owner());
+        config.put("group", props.group());
+        config.put("mailFrom", props.mail().from());
+        config.put("mailRetryCount", props.mail().retryCount());
+        config.put("mailTimeout", props.mail().timeout().toString());
+        config.put("mailEnabled", props.mail().enabled());
+        config.put("uiTheme", props.ui().theme());
+        config.put("uiItemsPerPage", props.ui().itemsPerPage());
+        config.put("serverPort", environment.getProperty("server.port"));
+        config.put("activeProfiles", Arrays.asList(environment.getActiveProfiles()));
+        config.put("banner", banner.describe());
+
+        return config;
     }
 }
