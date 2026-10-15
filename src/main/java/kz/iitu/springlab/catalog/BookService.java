@@ -3,7 +3,6 @@ package kz.iitu.springlab.catalog;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -24,8 +23,10 @@ public class BookService {
                 .toList();
     }
 
-    public Optional<Book> findById(long id) {
-        return repository.findById(id);
+    public Book findById(long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new BookNotFoundException("Book not found: " + id));
     }
 
     public Book create(Book book) {

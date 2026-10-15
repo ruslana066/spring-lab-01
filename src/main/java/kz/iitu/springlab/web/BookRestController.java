@@ -24,10 +24,8 @@ public class BookRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> findById(@PathVariable long id) {
-        return service.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public Book findById(@PathVariable long id) {
+        return service.findById(id);
     }
 
     @PostMapping
@@ -45,9 +43,7 @@ public class BookRestController {
             @PathVariable long id,
             @RequestBody Book book) {
 
-        if (service.findById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+        service.findById(id);
 
         Book updated = service.create(
                 new Book(id, book.title(), book.author(), book.year())
@@ -58,11 +54,9 @@ public class BookRestController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
-        if (service.delete(id)) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.notFound().build();
+        service.findById(id);
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")

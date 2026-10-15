@@ -25,3 +25,11 @@ th {
     padding: 10px;
     background: #fff3cd;
 }
+
+.is-invalid {
+    border: 1px solid red;
+}
+
+.error {
+    color: red;
+}

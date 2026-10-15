@@ -1,6 +1,9 @@
 spring:
   application:
     name: spring-lab
+  messages:
+    basename: messages
+    encoding: UTF-8
 
 server:
   port: 8080
