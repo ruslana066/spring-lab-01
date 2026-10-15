@@ -35,4 +35,10 @@ public class BookService {
     public boolean delete(long id) {
         return repository.deleteById(id);
     }
+
+    public List<Book> search(String query) {
+        return repository.findAll().stream()
+                .filter(book -> book.title().toLowerCase().contains(query.toLowerCase()))
+                .toList();
+    }
 }

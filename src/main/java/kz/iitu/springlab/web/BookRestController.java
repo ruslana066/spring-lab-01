@@ -64,4 +64,9 @@ public class BookRestController {
 
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/search")
+    public List<Book> search(@RequestParam String q) {
+        return service.search(q);
+    }
 }
