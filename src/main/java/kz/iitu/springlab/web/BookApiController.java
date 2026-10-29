@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import java.util.Locale;
 
 @Tag(name = "Books", description = "The catalogue of books")
 @RestController
@@ -101,5 +103,39 @@ public class BookApiController {
     public ResponseEntity<Void> delete(@PathVariable long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // GET /api/books/search?q=clean
+// 200 OK with results or empty array; 400 Bad Request if q is empty
+    @GetMapping("/search")
+    public ResponseEntity<?> search(
+            @RequestParam(required = false) String q) {
+
+        // Проверяем, что параметр q передан и не пустой
+        if (q == null || q.isBlank()) {
+            ProblemDetail problem = ProblemDetail.forStatusAndDetail(
+                    HttpStatus.BAD_REQUEST,
+                    "Query parameter 'q' must not be blank"
+            );
+
+            problem.setTitle("Invalid search query");
+
+            return ResponseEntity.badRequest().body(problem);
+        }
+
+        // Приводим запрос к нижнему регистру
+        String query = q.trim().toLowerCase(Locale.ROOT);
+
+        // Ищем по названию книги или имени автора
+        List<BookResponse> results = service.findAll(null).stream()
+                .filter(book ->
+                        book.title().toLowerCase(Locale.ROOT).contains(query)
+                                || book.author().toLowerCase(Locale.ROOT).contains(query)
+                )
+                .map(mapper::toResponse)
+                .toList();
+
+        // Если ничего не найдено, вернётся 200 OK и []
+        return ResponseEntity.ok(results);
     }
 }
