@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${book.title}">Book details</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+<h1 th:text="${book.title}">Book title</h1>
+<p th:text="${book.author}">Author</p>
+<p th:text="${book.year}">Year</p>
+<a th:href="@{/books}">Back to catalogue</a>
+</body>
+</html>

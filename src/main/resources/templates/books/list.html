@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{book.list}">Book catalogue</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+
+<h1 th:text="#{book.list}">Book catalogue</h1>
+
+<p th:if="${message}" class="flash" th:text="${message}"></p>
+
+<p>
+    <a th:href="@{/books(lang='en')}">English</a>
+    |
+    <a th:href="@{/books(lang='ru')}">Русский</a>
+</p>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th th:text="#{book.title}">Title</th>
+        <th th:text="#{book.author}">Author</th>
+        <th th:text="#{book.year}">Year</th>
+    </tr>
+
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}">1</td>
+        <td th:text="${book.title}">Title</td>
+        <td th:text="${book.author}">Author</td>
+        <td th:text="${book.year}">2020</td>
+    </tr>
+</table>
+
+<p>
+    <a th:href="@{/books/new(lang=${param.lang})}"
+       th:text="#{book.new}">New book</a>
+</p>
+
+</body>
+</html>
